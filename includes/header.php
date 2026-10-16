@@ -1,0 +1,10 @@
+<?php
+if (!isset($pageTitle)) $pageTitle = 'Edukasi Lingkungan';
+$current = basename($_SERVER['PHP_SELF'] ?? '');
+?>
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="EcoGarda, platform edukasi dan aksi nyata untuk menjaga lingkungan."><title><?= e($pageTitle) ?> | EcoGarda</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css"></head><body>
+<div class="announcement"><span>🌿</span> Satu bumi, tanggung jawab bersama. <a href="aksi.php">Mulai aksi hari ini ↗</a></div>
+<header class="site-header"><div class="nav-wrap"><a class="brand" href="index.php"><span class="brand-mark">e<span>g</span></span><span>eco<span class="brand-light">garda</span><small>ENVIRONMENTAL AWARENESS</small></span></a><button class="menu-toggle" aria-label="Buka menu" aria-expanded="false">☰</button><nav class="main-nav"><a class="<?= $current==='index.php'?'active':'' ?>" href="index.php">Beranda</a><a class="<?= $current==='edukasi.php'?'active':'' ?>" href="edukasi.php">Edukasi</a><a class="<?= $current==='aksi.php'?'active':'' ?>" href="aksi.php">Aksi Nyata</a><a class="<?= $current==='lapor.php'?'active':'' ?>" href="lapor.php">Lapor Lingkungan</a></nav><a class="nav-cta" href="tentang.php">Tentang kami <span>↗</span></a></div></header>
+<main>
+<?php if ($notice = flash('success')): ?><div class="flash success"><?= e($notice) ?></div><?php endif; ?>
+<?php if ($notice = flash('error')): ?><div class="flash error"><?= e($notice) ?></div><?php endif; ?>

@@ -1,0 +1,9 @@
+<?php
+require_once __DIR__ . '/../includes/bootstrap.php';
+if(is_admin()){header('Location: index.php');exit;}
+$error='';
+if($_SERVER['REQUEST_METHOD']==='POST'){verify_csrf();$email=trim($_POST['email']??'');$password=$_POST['password']??'';$stmt=$pdo->prepare("SELECT id,name,email,password_hash FROM admins WHERE email=? LIMIT 1");$stmt->execute([$email]);$admin=$stmt->fetch();if($admin && password_verify($password,$admin['password_hash'])){session_regenerate_id(true);$_SESSION['admin_id']=(int)$admin['id'];$_SESSION['admin_name']=$admin['name'];header('Location: index.php');exit;} $error='Email atau kata sandi tidak sesuai.';}
+$pageTitle='Masuk Admin';require __DIR__ . '/../includes/header.php';
+?>
+<section class="login-wrap"><form method="post" class="login-card"><a class="brand" href="../index.php"><span class="brand-mark">e<span>g</span></span><span>eco<span class="brand-light">garda</span><small>ADMIN CONSOLE</small></span></a><span class="eyebrow">AREA PENGELOLA</span><h1>Selamat datang.</h1><p>Masuk untuk mengelola edukasi, aksi, dan laporan komunitas.</p><?php if($error):?><div class="form-errors"><p><?=e($error)?></p></div><?php endif;?><input type="hidden" name="csrf_token" value="<?=e(csrf_token())?>"><div class="field"><label for="email">Email admin</label><input id="email" name="email" type="email" required autocomplete="username" placeholder="admin@ecogarda.id"></div><div class="field"><label for="password">Kata sandi</label><input id="password" name="password" type="password" required autocomplete="current-password" placeholder="Masukkan kata sandi"></div><button class="btn btn-primary btn-wide" type="submit">Masuk ke dashboard <span>↗</span></button><a class="back-link" href="../index.php">← Kembali ke situs</a></form></section>
+<?php require __DIR__ . '/../includes/footer.php'; ?>

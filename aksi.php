@@ -1,0 +1,9 @@
+<?php
+require_once __DIR__ . '/includes/bootstrap.php';
+$pageTitle='Aksi Nyata';
+$actions=$pdo->query("SELECT * FROM actions WHERE is_published=1 ORDER BY created_at DESC")->fetchAll();
+require __DIR__ . '/includes/header.php';
+?>
+<section class="page-hero page-hero-green"><span class="eyebrow">DARI NIAT MENJADI AKSI</span><h1>Langkah sederhana,<br><em>perubahan terasa.</em></h1><p>Pilih kebiasaan yang realistis, lakukan secara konsisten, dan ajak orang di sekitarmu.</p><div class="breadcrumb"><a href="index.php">Beranda</a><span>/</span> Aksi Nyata</div></section>
+<section class="section content-section"><div class="section-heading"><div><span class="eyebrow">PILIH AKSIMU</span><h2>Mulai dari yang paling dekat</h2><p>Kamu tidak harus melakukan semuanya sekaligus.</p></div><span class="pill"><?=count($actions)?> ide aksi</span></div><div class="action-catalog"><?php foreach($actions as $i=>$a): ?><article class="action-card" id="aksi-<?= (int)$a['id'] ?>"><div class="action-card-top"><span class="big-icon"><?=e($a['icon'])?></span><span class="number">0<?=($i+1)?></span></div><span class="category-label"><?=e($a['category'])?></span><h3><?=e($a['title'])?></h3><p><?=e($a['description'])?></p><div class="action-card-bottom"><span>◷ <?=e($a['duration'])?></span><button class="check-action" type="button" data-action-title="<?=e($a['title'])?>">Saya akan mencoba <span>↗</span></button></div></article><?php endforeach;?></div><div class="commitment" id="commitment" hidden><span>🌱</span><div><b>Komitmen kecil, dampak nyata.</b><p id="commitment-text"></p></div><button type="button" id="close-commitment" aria-label="Tutup">×</button></div></section>
+<?php require __DIR__ . '/includes/footer.php'; ?>
